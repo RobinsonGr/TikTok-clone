@@ -11,21 +11,21 @@ export default function Header(){
 
     return (
         <div className="border-b border-grey "> 
-            <div className="flex justify-between items-center py-2 mx-auto w-full max-w-screen-lg">
+            <div className="flex justify-between items-center py-2 mx-auto w-full px-5">
 
                 {/*tiktok's logo */}
                     <Link href="/">
-                        <img className="max-w-36" src="/tiktok-logo.png"/>
+                        <img className="max-w-28" src="/tiktok-logo.png"/>
                     </Link>
 
                 {/*search bar */}
-                <div className="relative max-w-md px-3 py-1 flex justify-between items-center h-10 bg-gray-200 rounded-full">
-                
+                <div className="relative hidden md:flex w-96 px-3 py-1 flex justify-between items-center h-10 bg-gray-200 rounded-full">
+
                     <input 
                         type="text"
                         placeholder="Search"
                         className="w-full my-2 pl-2 mr-2 text-gray-500 bg-gray-200 border-e-2 placeholder:text-gray-400 border-gray-300 focus:outline-none"/>
-                        <BiSearch color="#A1A2A7" size="22"/>  
+                    <BiSearch color="#A1A2A7" size="22"/>  
                         
                     {/* dropdown search users  */}
                     <div className="absolute bg-white w-full h-auto flex justify-between left-0 z-20 top-10 py-2  border"> 
@@ -50,24 +50,48 @@ export default function Header(){
                             <span className="px-2 text-base font-medium">Upload</span>  
                         </button>
                     
-                        {/*profile menu */}
-                        <button >
-                            <Link href='/'>
-                                <img src="https://placehold.co/25" className="rounded-full size-9"/>
-                            </Link>
-                        </button>
-
-                        {/* dropdown profile options*/}
-                        <div className="absolute w-52 rounded-lg bg-white w-full h-auto flex justify-between right-0 z-20 top-10 border shadow-xl py-1.5">
-                            <button 
-                            className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer"
-                            >
-                                <div className="flex items-center">
-                                    <BiUser />
-                                    <div className="truncate ml-2">Profile</div>
-                                </div>
+                        { 0 ? ( 
+                              /*user auth profile menu */
+                            <div>     
+                            <button >
+                                <Link href='/'>
+                                    <img src="https://placehold.co/25" className="rounded-full size-9"/>
+                                </Link>
                             </button>
+
+                            {/* dropdown profile options */}
+                             <div className="absolute w-52 flex flex-col rounded-lg bg-white w-full h-auto  right-0 z-20 top-10 border shadow-xl py-1.5">
+                            
+                             <button 
+                             className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer"
+                             >
+                                 <div className="flex items-center">
+                                     <BiUser />
+                                     <div className="truncate ml-2">Profile</div>
+                                 </div>
+                             </button>
+ 
+                             <button 
+                             className="flex items-center w-full justify-start py-3 px-2 hover:bg-gray-100 cursor-pointer"
+                             >
+                                 <div className="flex items-center">
+                                     <FiLogOut />
+                                     <div className="truncate ml-2">Sign out</div>
+                                 </div>
+                             </button>
+                         </div>
+                         </div>
+                        ) : (     
+                        <div className="flex items-center"> 
+                        <button className="flex items-center px-3 py-1.5 bg-[#F12B56] border rounded-md ">
+                            <span className="whitespace-nowrap mx-4 text-white font-medium">Log in</span>  
+                        </button>
+                        <BsThreeDotsVertical color="#161724" size="25"/>
                         </div>
+                        )
+
+                        }               
+
                     </div>
             </div>
         </div>
