@@ -15,7 +15,7 @@ export default function Header(){
 
                 {/*tiktok's logo */}
                     <Link href="/">
-                        <img className="max-w-28" src="/tiktok-logo.png"/>
+                        <img className="max-w-32" src="/tiktok-logo.png"/>
                     </Link>
 
                 {/*search bar */}
