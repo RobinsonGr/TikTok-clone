@@ -22,7 +22,7 @@ export default function SideItemButton({iconString, colorString, sizeString}: Me
     };
 
     return (
-        <div className="flex justify-center lg:justify-start hover:bg-gray-200 p-3">
+        <div className="flex justify-center lg:justify-start hover:bg-gray-200 p-2">
             {renderIcon()}
 
             <span className="hidden lg:flex ml-2 text-lg font-bold">{iconString}</span>
