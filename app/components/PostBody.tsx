@@ -34,11 +34,11 @@ export default function PostBody(){
     }, [])
 
     return (
-        <>
-            <div id={`PostMain-${1}`} className="flex border-b py-6">
+        <div className="flex justify-center" >
+            <div id={`PostMain-${1}`} className="flex justify-center w-full border-b py-6 max-w-2xl">
 
                 <div className="cursor-pointer">
-                    <img className="rounded-full max-h-[60px]" width="60" src={'Andres'} />
+                    <img className="rounded-full max-h-[60px]" width="60" src="https://placehold.co/40" />
                 </div>
 
                 <div className="pl-3 w-full px-4">
@@ -87,7 +87,7 @@ export default function PostBody(){
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 
 

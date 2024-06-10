@@ -10,7 +10,7 @@ import { FiLogOut } from "react-icons/fi"
 export default function Header() {
 
     return (
-        <div className="border-b border-grey ">
+        <div className="border-b border-grey">
             <div className="flex justify-between items-center py-2 mx-auto w-full px-5">
 
                 {/*tiktok's logo */}

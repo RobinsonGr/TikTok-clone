@@ -1,5 +1,5 @@
 "use client"
-import Layout from './layouts/layout'
+import AppLayout from './layouts/AppLayout'
 
 import Image from "next/image";
 import Header from "./layouts/includes/Header"
@@ -11,9 +11,11 @@ import PostBody from "./components/PostBody";
 export default function Home() {
   return (
     <>
-      <Layout>
+      <AppLayout>
+      <div className=" w-full ">
         <PostBody/>
-      </Layout>
+      </div>
+      </AppLayout>
     </>
   );
 }
