@@ -1,5 +1,5 @@
-"use client"
 import AppLayout from './layouts/AppLayout'
+import ClientRender from './ClientRender'
 
 import Image from "next/image";
 import Header from "./layouts/includes/Header"
@@ -12,9 +12,9 @@ export default function Home() {
   return (
     <>
       <AppLayout>
-      <div className=" w-full ">
-        <PostBody/>
-      </div>
+        <div className='w-full'>
+            <PostBody/>
+        </div>
       </AppLayout>
     </>
   );

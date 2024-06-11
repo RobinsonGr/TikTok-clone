@@ -31,10 +31,10 @@ export default function PostBody(){
             observer.observe(postMainElement)
 
         })() : null
-    }, [])
+    }, []);
 
     return (
-        <div className="flex justify-center" >
+        <div className="flex justify-center w-full" >
             <div id={`PostMain-${1}`} className="flex justify-center w-full border-b py-6 max-w-2xl">
 
                 <div className="cursor-pointer">
@@ -77,9 +77,9 @@ export default function PostBody(){
                                 src="/airplane.mp4"
                             />
                             <img 
-                                className="absolute right-2 bottom-10" 
+                                className="absolute right-2 bottom-8" 
                                 width="90" 
-                                src="/images/tiktok-logo-white.png"
+                                src="/tiktok-logo-white.png"
                             />
                         </div>
                         
