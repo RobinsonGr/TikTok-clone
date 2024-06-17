@@ -4,7 +4,7 @@ export interface MenuItemTypes {
     sizeString: string
 }
 
-export interface UsertToFollow {
+export interface UserToFollow {
     id: string;
     name: string;
     image: string;
@@ -23,6 +23,12 @@ export interface PostDetails {
     }
 }
 
+//errors
+export interface UploadError {
+    type: string;
+    message: string;
+}
+
 //Components
 export interface PostBodyCompTypes {
     post: PostDetails
@@ -31,5 +37,5 @@ export interface PostBodyCompTypes {
 
 // THOSE ARE FOR THE LAYOUT
 export interface UserToFollowTypes {
-    user: UsertToFollow
+    user: UserToFollow
 }
