@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Person {
+  id: Int!
+  email: String!
+  fullName: String!
+  biography: String
+  avatar: String
+  password: String!
+}
+
+type Graphqltest {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  person: [Person!]!
+  graphqltest(id: Int!): Graphqltest!
+}
+
+type Mutation {
+  CreatePersonInput(data: CreatePersonInput!): Person!
+  createGraphqltest(createGraphqltestInput: CreateGraphqltestInput!): Graphqltest!
+  updateGraphqltest(updateGraphqltestInput: UpdateGraphqltestInput!): Graphqltest!
+  removeGraphqltest(id: Int!): Graphqltest!
+}
+
+input CreatePersonInput {
+  email: String!
+  fullName: String!
+  biography: String
+  avatar: String
+  password: String!
+}
+
+input CreateGraphqltestInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGraphqltestInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
