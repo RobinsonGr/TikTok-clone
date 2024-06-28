@@ -11,7 +11,7 @@ export class Person {
   email: string;
 
   @Field()
-  fullName: string;
+  name: string;
 
   @Field({ nullable: true })
   biography?: string;
