@@ -24,6 +24,8 @@ async function bootstrap() {
   //app.use(graphqlUploadExpress({ maxFileSize: 10000000000, maxFiles: 10 }));
   //app.use(cookieParser());
 
+
+  //pipes here for data validations
   const validationPipeOptions = {
     whitelist: true,
     transform: true,

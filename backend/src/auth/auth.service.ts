@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+//Badreqst (Itll throw 400 bad request) and Unauthexept(throwing 400 unauth) belong to nestjs's exeption filters
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {JwtService} from "@nestjs/jwt";
 import { Response, Request } from 'express';
@@ -16,24 +17,23 @@ export class AuthService {
     ) {}
 
     async refreshToken(req: Request, res: Response) : Promise<string> {
-        //este header va a estar en el header del token
-        //este es de long-live a diferencia del acess token que es short-live
+        //we start retreving the refreshToken, (the long-live one, they're the same, the onyl difference is it has more expiration time than the access token and less claims in the payload, it is for retrieve the access token when his time is up)
         const refreshToken = req.cookies['refresh_token'];
 
 
         if(!refreshToken) {
-            //aqui va la exepcion de unauthorized
-        }
+            //it will throw an 400 indicating wihtout auth/acess
+            throw new UnauthorizedException('Refresh token wasnt found')
+        };
 
         let payload;
-        //usar los metodos de jwt son async, por eso el try catch block
         try {
-
             payload = this.jwtService.verify(refreshToken, {
+                //I set this configService in the app's module, so i'm able to get the enviroment variables directly
                 secret: this.configService.get<string>('REFRESH_TOKEN_SECRET')
             });
         } catch (err) {
-            ///DONT FORGET TO THROW THE UNAUTHORIZEDEXEPTION 
+            throw new UnauthorizedException('Refresh token wasnt found')
         }
 
         //after validating the refresh token, now it's required to retrieve the user, check and validate it
@@ -41,24 +41,28 @@ export class AuthService {
             where: {id: payload.sub},
         });
 
-        const expiresIn = 15000; //those are seconds
+        if(!userExists){
+            throw new BadRequestException('user doesnt exist anymore')
+        }
+
+        const expiresIn = 20000; //those are seconds
         const expiration = Math.floor(Date.now() / 1000) + expiresIn;
         const accessToken = this.jwtService.sign(
             {...payload, exp: expiration},
             {
                 secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
-                expiresIn: '7d'
+                expiresIn: '6d'
             }
-        )
+        );
 
-        let refreshToken2;
-
-        //es similar al usar express, simplemente nestjs tiene objetos bult=in de Response and Request y es lo mismo manipulando estos objetos de https para modificar tokens y anadir headers
+        //It's similar to using Express; NestJS simply has built-in objects for Response and Request, and it's the same when manipulating these HTTP objects to modify tokens and add headers
         req.cookies('access_token', accessToken, {httpOnly: true})
-       // req.cookies('refresh_token', refreshToken2)
-    }
+
+        return accessToken
+    };
+};
 
 
-
-
-}
+//signup
+//signIn method name
+//RETURN ALL METHODS WITH PROMISE FOR EXAMPLE {ACESS_TOKEN; string}
