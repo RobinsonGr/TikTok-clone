@@ -60,6 +60,52 @@ export class AuthService {
 
         return accessToken
     };
+
+
+    async registerUser(userDto: UserDto, res: Response): Promise<{ userId: string }> {
+        const existingUser = await this.userRepository.findByEmail(userDto.email);
+        if (existingUser) {
+          throw new ConflictException('Email already registered');
+        }
+    
+        const hashedPassword = await this.passwordService.hashPassword(userDto.password);
+        const newUser = await this.userRepository.create({
+          ...userDto,
+          password: hashedPassword,
+        });
+    
+        await this.tokenService.setAuthTokens(newUser, res);
+        return { userId: newUser.id };
+      }
+    
+      async authenticateUser(credentials: LoginCredentialsDto, res: Response): Promise<{ userId: string }> {
+        const user = await this.userRepository.findByEmail(credentials.email);
+        if (!user || !(await this.passwordService.validatePassword(credentials.password, user.password))) {
+          throw new UnauthorizedException('Invalid credentials');
+        }
+    
+        await this.tokenService.setAuthTokens(user, res);
+        return { userId: user.id };
+      }
+    
+      async refreshUserToken(req: Request, res: Response): Promise<void> {
+        const refreshToken = req.cookies['refresh_token'];
+        if (!refreshToken) {
+          throw new UnauthorizedException('Refresh token not found');
+        }
+    
+        const userId = await this.tokenService.validateRefreshToken(refreshToken);
+        const user = await this.userRepository.findById(userId);
+        if (!user) {
+          throw new UnauthorizedException('User not found');
+        }
+    
+        await this.tokenService.setAuthTokens(user, res);
+      }
+    
+      async logoutUser(res: Response): Promise<void> {
+        this.tokenService.clearAuthTokens(res);
+      }
 };
 
 
