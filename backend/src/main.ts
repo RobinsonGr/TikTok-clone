@@ -32,6 +32,7 @@ async function bootstrap() {
     exceptionFactory: (errors) => formatValidationErrors(errors),
   };
 
+  //this is to use decoratos such as class-validatos
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
   //app.useGlobalFilters(new GraphQLErrorFilter());
   await app.listen(3001);
