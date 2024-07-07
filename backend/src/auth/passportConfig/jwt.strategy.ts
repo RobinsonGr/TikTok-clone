@@ -7,7 +7,7 @@ import { Request } from 'express';
 import { jwtConstants } from '../constants';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy) {ed
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService
