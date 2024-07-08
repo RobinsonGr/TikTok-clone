@@ -7,7 +7,7 @@ import { Request } from 'express';
 import { jwtConstants } from '../constants';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {ed
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly prisma: PrismaService,
     private configService: ConfigService
@@ -23,16 +23,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {ed
         },
       ]),
       ignoreExpiration: false,
-      //I cant use await/async inside super, so 'ill create an isolated method and then reasing secretOrKey with the key
-      secretOrKey: JwtStrategy.getSecret(configService),
+      //since isn't async, i can use this funcion directly wihin the super (thich is not possible with async implementation)
+      secretOrKey: jwtConstants(configService).secret,
     });
   }
-  // I'm using the jwtConstant  recommended by nestjt for modularity and share the token across different services here,that why im injecting configService, to be able to use the get method to acess to the method. in authModule i do the same, but using useFactory to inject it cos isn't a class
+  // I'm using the jwtConstant  recommended by nestjt for modularity and share the token across different services here,that why im injecting configService, to be able to use the get method to acess to the method. in authModule i do the same, but using useFactory to inject it cos isn't a class, but i realize that it can be sync, so is not needed, but i'll save thsi implementation, would be useful later in any other point
 
-  private static async getSecret(configService: ConfigService): Promise<string> {
-    const jwtConfig = await jwtConstants(configService);
-    return jwtConfig.secret;
-  }
+  // async onModuleInit() {
+  //   const jwtConfig = await jwtConstants(this.configService);
+  //   (this as any).options.secretOrKey = jwtConfig.secret;
+  // }
 
   // after the token has been verified, it will check the user auth. Something similar to serialization/deserialization in passport local
   async validate(payload: any) {
