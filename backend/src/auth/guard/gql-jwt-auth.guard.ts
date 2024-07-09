@@ -11,7 +11,7 @@ import {
   @Injectable()
 
   //using canActive interface for create guards
-  export class AuthGuard implements CanActivate {
+  export class GraphqlJwtGuard implements CanActivate {
     constructor(
       private jwtService: JwtService,
       private configService: ConfigService,
