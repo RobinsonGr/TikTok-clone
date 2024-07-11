@@ -15,7 +15,7 @@ datasource db {
 
 model Person {
   id          Int       @id @default(autoincrement())
-  name    String
+  name        String
   biography   String?
   avatar      String?
   email       String    @unique
@@ -29,35 +29,35 @@ model Person {
 
 model Post {
   id          Int       @id @default(autoincrement())
-  userId      Int       @map("user_id")
-  user        Person    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personId    Int       @map("person_id")
+  person      Person    @relation(fields: [personId], references: [id], onDelete: Cascade)
   text        String
   video       String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdOn   DateTime  @default(now()) @map("created_on")
+  updatedOn   DateTime  @updatedAt @map("updated_on")
   comments    Comment[]
   likes       Like[]
 }
 
 model Comment {
   id          Int       @id @default(autoincrement())
-  userId      Int       @map("user_id")
+  personId    Int       @map("person_id")
   postId      Int       @map("post_id")
-  user        Person    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person      Person    @relation(fields: [personId], references: [id], onDelete: Cascade)
   post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   text        String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdOn   DateTime  @default(now()) @map("created_on")
+  updatedOn   DateTime  @updatedAt @map("updated_on")
 }
 
 model Like {
   id          Int       @id @default(autoincrement())
-  userId      Int       @map("user_id")
+  personId    Int       @map("person_id")
   postId      Int       @map("post_id")
-  user        Person    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person      Person    @relation(fields: [personId], references: [id], onDelete: Cascade)
   post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdOn   DateTime  @default(now()) @map("created_on")
+  updatedOn   DateTime  @updatedAt @map("updated_on")
 
-  @@unique([userId, postId])
+  @@unique([personId, postId])
 }

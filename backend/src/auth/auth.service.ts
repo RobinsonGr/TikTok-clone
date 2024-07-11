@@ -42,11 +42,11 @@ export class AuthService {
     }
 
     //after validating the refresh token, now it's required to retrieve the user, check and validate it
-    const userExists = await this.prisma.person.findUnique({
+    const personExist = await this.prisma.person.findUnique({
       where: { id: payload.sub },
     });
 
-    if (!userExists) {
+    if (!personExist) {
       throw new BadRequestException('user doesnt exist anymore')
     }
 

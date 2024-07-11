@@ -76,7 +76,7 @@ import {
   
         // If verification ok, attach the payload to the request object
         // This makes the user data available in the resolvers
-        request['user'] = payload;
+        request['person'] = payload;
 
         //  payload jwt looks lie this
         /*       
@@ -84,7 +84,7 @@ import {
   "sub": "1234567890",  // subject (usually user ID)
   "name": "John Doe",   // user's name
   "email": "john@example.com",
-  "role": "user",       // user's role (could be used for authorization)
+  "role": "person",       // user's role (could be used for authorization)
   "iat": 1516239022,    // issued at (timestamp)
   "exp": 1516242622     // expiration time (timestamp)
 }

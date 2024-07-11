@@ -22,7 +22,7 @@ export class PersonService {
     });
   }
 
-  async fetchAllPersons(): Promise<Person[]> {
+  async fetchAllPersons() {
     return this.prisma.person.findMany({
       include: {
         posts: true,
