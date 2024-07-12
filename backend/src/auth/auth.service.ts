@@ -35,7 +35,7 @@ export class AuthService {
     try {
       payload = this.jwtService.verify(refreshToken, {
         //I set this configService in the app's module, so i'm able to get the enviroment variables directly
-        secret: this.configService.get<string>('REFRESH_TOKEN_SECRET')
+        secret: this.configService.get<string>('JWT_SECRET')
       });
     } catch (err) {
       throw new UnauthorizedException('Refresh token wasnt found')
@@ -55,7 +55,7 @@ export class AuthService {
     const accessToken = this.jwtService.sign(
       { ...payload, exp: expiration },
       {
-        secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
+        secret: this.configService.get<string>('JWT_SECRET'),
         expiresIn: '6d'
       }
     );

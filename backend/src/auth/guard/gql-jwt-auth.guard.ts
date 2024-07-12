@@ -71,7 +71,7 @@ import {
       try {
         // Verify  token
         const payload = await this.jwtService.verifyAsync(token, {
-          secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
+          secret: this.configService.get<string>('JWT_SECRET'),
         });
   
         // If verification ok, attach the payload to the request object

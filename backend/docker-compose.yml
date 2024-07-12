@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    container_name: my_postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      DATABASE_HOST: 127.0.0.1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: tiktok-db
+    volumes:
+      - my_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  my_postgres_data:

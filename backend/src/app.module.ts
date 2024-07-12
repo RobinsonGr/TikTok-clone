@@ -19,8 +19,8 @@ import { AuthModule } from './auth/auth.module';
       context: ({ req, res }) => ({ req, res })
       //It didn't set the explictly the playground option as true, but it still works 
     }),
-    // With ConfigModule I was able to access some enviroment variables, important for auth using configservice.get
-    ConfigModule.forRoot({}),
+    // With ConfigModule It'll be able to access some enviroment variables, important for auth using configservice.get 
+    ConfigModule.forRoot({isGlobal: true}),
     PersonModule,
     PrismaModule,
     GraphqltestModule,
