@@ -1,18 +1,17 @@
-// person.resolver.ts
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { BadRequestException, UseFilters, UseGuards } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { SignUpDto } from 'src/auth/dto/signup.dto';
 import { SignInDto } from 'src/auth/dto/signin.dto';
 import { GraphqlJwtGuard } from 'src/auth/guard/gql-jwt-auth.guard';
-import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { Response, Request } from 'express';
 import { signUpResponse } from 'src/types/signup-response.type';
 import { SignInResponse } from 'src/types/signin-response.type';
 import { Person } from 'src/types/person-model.type';
 import { GraphQLErrorFilter } from 'src/filter/gql-validation-error.filter';
 import { PersonService } from './person.service';
-import { FileUploadService } from './file-upload/file-upload.service';
+import { FileUploadService } from 'src/file-upload/file-upload.service';
+import { FileUpload, GraphQLUpload } from 'graphql-upload-ts';
 
 // This will handle all graphql operations, this file won't touch the db directly, that is person.service.ts for
 @Resolver('Person')
@@ -88,7 +87,7 @@ export class PersonResolver {
     //we'll receive data from client, so it needs to make sure to math the schema using args strings
     @Args('name', { type: () => String, nullable: true }) name?: string,
     @Args('biography', { type: () => String, nullable: true }) biography?: string,
-    @Args('avatar', { type: () => GraphQLUpload, nullable: true }) avatar?: GraphQLUpload,
+    @Args('avatar', { type: () => GraphQLUpload, nullable: true }) avatar?: FileUpload,
   ): Promise<Person> {
     // I'm using FileUploadService to handle image uploads
     const imageUrl = avatar ? await this.fileUploadService.uploadImage(avatar) : undefined;

@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
-// import { GraphQLErrorFilter } from './filters/custom-exception.filter';
-// import * as cookieParser from 'cookie-parser';
-// import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
+import { GraphQLErrorFilter } from './filter/gql-validation-error.filter';
+import cookieParser from 'cookie-parser';
 
+import { graphqlUploadExpress } from 'graphql-upload-ts';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
@@ -21,8 +21,8 @@ async function bootstrap() {
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   });
   
-  //app.use(graphqlUploadExpress({ maxFileSize: 10000000000, maxFiles: 10 }));
-  //app.use(cookieParser());
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000000, maxFiles: 10 }));
+  app.use(cookieParser());
 
 
   //pipes here for data validations
@@ -34,7 +34,7 @@ async function bootstrap() {
 
   //this is to use decoratos such as class-validatos
   app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
-  //app.useGlobalFilters(new GraphQLErrorFilter());
+  app.useGlobalFilters(new GraphQLErrorFilter());
   await app.listen(3001);
 }
 

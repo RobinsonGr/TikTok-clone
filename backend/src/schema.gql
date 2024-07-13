@@ -2,13 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Person {
-  id: Int!
-  email: String!
-  name: String!
-  biography: String
-  avatar: String
-  password: String!
+input CreateGraphqltestInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ErrorType {
+  code: String
+  message: String!
 }
 
 type Graphqltest {
@@ -16,33 +22,61 @@ type Graphqltest {
   exampleField: Int!
 }
 
+type Mutation {
+  createGraphqltest(createGraphqltestInput: CreateGraphqltestInput!): Graphqltest!
+  logout: String!
+  refreshToken: String!
+  removeGraphqltest(id: Int!): Graphqltest!
+  signIn(signInInput: SignInDto!): SignInResponse!
+  signUp(signUpInput: SignUpDto!): signUpResponse!
+  updateGraphqltest(updateGraphqltestInput: UpdateGraphqltestInput!): Graphqltest!
+  updatePersonProfile(avatar: Upload, biography: String, name: String): Person!
+}
+
+type Person {
+  avatar: String
+  biography: String
+  createdOn: DateTime!
+  email: String!
+  id: Float!
+  name: String!
+  password: String!
+  updatedOn: DateTime!
+}
+
 type Query {
-  person: [Person!]!
+  accessAuthData: String!
+  getPersons: [Person!]!
   graphqltest(id: Int!): Graphqltest!
 }
 
-type Mutation {
-  CreatePerson(data: CreatePersonInput!): Person!
-  createGraphqltest(createGraphqltestInput: CreateGraphqltestInput!): Graphqltest!
-  updateGraphqltest(updateGraphqltestInput: UpdateGraphqltestInput!): Graphqltest!
-  removeGraphqltest(id: Int!): Graphqltest!
-}
-
-input CreatePersonInput {
+input SignInDto {
   email: String!
-  fullName: String!
-  biography: String
-  avatar: String
   password: String!
 }
 
-input CreateGraphqltestInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type SignInResponse {
+  error: ErrorType
+  person: Person!
+}
+
+input SignUpDto {
+  confirmPassword: String!
+  email: String!
+  name: String!
+  password: String!
 }
 
 input UpdateGraphqltestInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type signUpResponse {
+  error: ErrorType
+  person: Person
 }

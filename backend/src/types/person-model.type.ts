@@ -10,10 +10,13 @@ export class Person {
 
   @Field()
   email?: string;
+
   @Field({ nullable: true })
   biography?: string;
 
- 
+  @Field({ nullable: true })
+  avatar?: string;  // Add this line
+
   @Field()
   password: string;
 
