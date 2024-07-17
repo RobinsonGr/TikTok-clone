@@ -1,0 +1,1 @@
+//this is a barrel file, works as a singgle point, to re-export contants of other files in the same directory to every component/function can be imported from the same file (having multiples files from), just a clear practice
