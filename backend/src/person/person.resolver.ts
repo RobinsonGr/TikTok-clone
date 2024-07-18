@@ -52,6 +52,7 @@ export class PersonResolver {
     @Args('signInInput') signInDto: SignInDto,
     @Context() context: { res: Response },
   ): Promise<SignInResponse> {
+    //logIn method will validate the user with bcrypt and will set both tokens (refresh, access) in the headers, finally will return the userdata
     return this.authService.logIn(signInDto, context.res);
   }
 
