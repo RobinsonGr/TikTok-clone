@@ -4,10 +4,34 @@ import { BiSearch, BiUser } from "react-icons/bi"
 import { AiOutlinePlus } from "react-icons/ai"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FiLogOut } from "react-icons/fi"
+import Upload from "@/app/upload/page"
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from '@/graphql/mutations';
 
 //It will wrapp this in a client component, just for now, i will use use client
 
 export default function Header() {
+
+  
+    const [signIn, { data, loading, error }] = useMutation(SIGN_IN);
+    // Test the signIn mutation
+    const handleSignIn = async () => {
+      try {
+        const response = await signIn({
+          variables: {
+            email: 'alicejohnson@example.com', // Replace with actual email
+            password: '123456Aa', // Replace with actual password
+          },
+        });
+        console.log('SignIn response:', JSON.stringify(response.data, null, 2));
+    } catch (err) {
+        console.error('Error signing in:', err);
+      }
+    };
+
+
+    handleSignIn()
+
 
     return (
         <div className="border-b border-grey">
@@ -41,6 +65,7 @@ export default function Header() {
                     </div>
                 </div>
 
+                <Upload></Upload>
                 {/*right buttons */}
                 <div className="relative flex items-center gap-3">
 

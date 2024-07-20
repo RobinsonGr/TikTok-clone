@@ -8,6 +8,9 @@ export const SIGN_IN = gql`
         name
         email
       }
+      error {
+        message
+      }
     }
   }
 `;

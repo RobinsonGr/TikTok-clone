@@ -5,8 +5,11 @@ import { BiLoaderCircle, BiSolidCloudUpload } from "react-icons/bi"
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { PiKnifeLight } from 'react-icons/pi';
 import {UploadError} from "@/app/types";
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from '@/graphql/mutations';
 
 export default function Upload(){
+
 
     let [fileDisplay, setFileDisplay] = useState<string>('');
     let [description, setDescription] = useState<string>('');

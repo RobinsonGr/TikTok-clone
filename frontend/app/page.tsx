@@ -8,8 +8,7 @@ import PostBody from "./components/PostBody";
 
 
 export default async function Home() {
-  const { data } = await getClient().query({ query: SIGN_IN });
-  console.log(data)
+
 
   return (
     <>
