@@ -1,4 +1,4 @@
-import { createUploadLink } from "apollo-upload-client";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 // This creates a special Apollo Link that supports file uploads
 export const uploadLink = createUploadLink({
