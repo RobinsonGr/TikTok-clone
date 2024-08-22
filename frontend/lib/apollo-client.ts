@@ -1,5 +1,7 @@
 
-import { ApolloClient, InMemoryCache, HttpLink, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, InMemoryCache, NormalizedCacheObject, ApolloLink } from '@apollo/client';
+import { errorLink } from './apollo-error-link';
+import { uploadLink } from './apollo-upload-link';
 import { useMemo } from 'react';
 
 // Variable to hold the Apollo Client instance, initially undefined
@@ -9,16 +11,20 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 function createApolloClient() {
   return new ApolloClient({
+    uri: 'http://localhost:3001/graphql',
      //window is just an object, and it's undefidend in ssr cos it doesn't exist in node (Server)
     ssrMode: typeof window === 'undefined', 
-    // Set up the HttpLink with the graphql endpoint and include credentials for authentication
-    link: new HttpLink({
-      uri: 'http://localhost:3001/graphql',
-      //include credentials cookies
-      credentials: 'include',
-    }),
+    //include credentials cookies
+    credentials: 'include',
+    // the links are like middleware 
+    link: ApolloLink.from([errorLink, uploadLink]),
     // Using InMemoryCache for caching GraphQL query results (it's the default option to store the data)
+    //I leaves as it as simple. IF A PROBLEM WITH RETREVING COMMENTS COMES OUT, I MUST USE POLICIES (MERGE FUNCTION)IN THE QUERY RESPONSABLE TO GET COMMENTS
     cache: new InMemoryCache(),
+    headers: {
+      "Content-Type": "application/json",
+    },
+   
   });
 };
 
@@ -50,7 +56,7 @@ export function useApollo(initialState: any) {
   return store;
 };
 
-//to kick 
+//to kick in
 export function getClient() {
   //and apollo client isntance have the methodds to execute queryes or mutate query() mutate()
   return initializeApollo();

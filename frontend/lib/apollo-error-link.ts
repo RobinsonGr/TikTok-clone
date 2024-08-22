@@ -34,7 +34,7 @@ async function refreshToken(client: ApolloClient<NormalizedCacheObject>) {
 let retryCount = 0;
 const maxRetry = 3;
 
-// This Apollo Link handles errors in GraphQL responses
+// Handling errors, getting the refreshToken string and put it in the headers, try max 3 times
 export const errorLink = onError(({ graphQLErrors, operation, forward }) => {
   const operationName = operation.operationName;
   console.log(operationName, "operationName");
@@ -45,7 +45,7 @@ export const errorLink = onError(({ graphQLErrors, operation, forward }) => {
       if (err.extensions.code === "UNAUTHENTICATED" && retryCount < maxRetry) {
         retryCount++;
 
-        // Return a new Observable that will attempt to refresh the token
+        // it retunns a new Observable that will attempt to refresh the token
         return new Observable((observer) => {
           refreshToken(getClient())
             .then((token) => {
@@ -58,6 +58,7 @@ export const errorLink = onError(({ graphQLErrors, operation, forward }) => {
                 },
               }));
               // Retry the operation with the new token
+              //Forward is just like the equivalent of next in express .js instead here it moves to the next link
               const forward$ = forward(operation);
               forward$.subscribe(observer);
             })

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@graphql-codegen/cli": "^5.0.2",
     "@types/apollo-upload-client": "^18.0.0",
     "apollo-upload-client": "^18.0.1",
     "graphql": "^16.9.0",
